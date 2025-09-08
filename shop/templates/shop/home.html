@@ -1,0 +1,153 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Home - My Shop{% endblock %}
+
+{% block content %}
+<!-- Dynamic Carousel / Slider -->
+{% if banners %}
+<div id="homepageCarousel" class="carousel slide mb-5 shadow-sm" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        {% for banner in banners %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <img src="{{ banner.image.url }}" class="d-block w-100" alt="{{ banner.title }}">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>{{ banner.title }}</h5>
+                {% if banner.subtitle %}
+                    <p>{{ banner.subtitle }}</p>
+                {% endif %}
+                {% if banner.button_link %}
+                    <a href="{{ banner.button_link }}" class="btn btn-primary btn-sm">
+                        {{ banner.button_text }}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#homepageCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#homepageCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+{% endif %}
+
+
+<!-- Hero Section -->
+<div class="p-5 mb-4 bg-light rounded-3 text-center shadow-sm">
+    <div class="container py-5">
+        <h1 class="display-4 fw-bold">Welcome to ZARA MART</h1>
+        <p class="lead">Your one-stop shop for quality products at unbeatable prices.</p>
+        <a href="{% url 'product_list' %}" class="btn btn-primary btn-lg px-4">Shop Now</a>
+    </div>
+</div>
+
+<!-- Featured Categories -->
+<section class="my-5">
+    <h2 class="text-center mb-4">Shop by Category</h2>
+    <div class="row text-center">
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100">
+                <img src="https://via.placeholder.com/400x250" class="card-img-top" alt="Electronics">
+                <div class="card-body">
+                    <h5 class="card-title">Electronics</h5>
+                    <p class="card-text">Latest gadgets and home appliances.</p>
+                    <a href="{% url 'product_list' %}" class="btn btn-outline-primary">Shop Electronics</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100">
+                <img src="https://via.placeholder.com/400x250" class="card-img-top" alt="Fashion">
+                <div class="card-body">
+                    <h5 class="card-title">Fashion</h5>
+                    <p class="card-text">Trendy clothes, shoes, and accessories.</p>
+                    <a href="{% url 'product_list' %}" class="btn btn-outline-primary">Shop Fashion</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100">
+                <img src="https://via.placeholder.com/400x250" class="card-img-top" alt="Groceries">
+                <div class="card-body">
+                    <h5 class="card-title">Groceries</h5>
+                    <p class="card-text">Fresh groceries delivered to your door.</p>
+                    <a href="{% url 'product_list' %}" class="btn btn-outline-primary">Shop Groceries</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Trending Products -->
+<section class="my-5">
+    <h2 class="text-center mb-4">Trending Products</h2>
+    <div class="row">
+        {% for product in products|slice:":4" %}
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                {% else %}
+                <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="No image">
+                {% endif %}
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="fw-bold">${{ product.price }}</p>
+                    <a href="{% url 'product_detail' product.pk %}" class="btn btn-sm btn-primary">View</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No products available yet. Please check back later!</p>
+        {% endfor %}
+    </div>
+    <div class="text-center mt-3">
+        <a href="{% url 'product_list' %}" class="btn btn-outline-dark">View All Products</a>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="my-5 bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">What Our Customers Say</h2>
+        <div class="row text-center">
+            <div class="col-md-4">
+                <blockquote class="blockquote">
+                    <p>"Amazing products and fast delivery!"</p>
+                    <footer class="blockquote-footer">Sarah K.</footer>
+                </blockquote>
+            </div>
+            <div class="col-md-4">
+                <blockquote class="blockquote">
+                    <p>"Great customer service and quality items."</p>
+                    <footer class="blockquote-footer">James O.</footer>
+                </blockquote>
+            </div>
+            <div class="col-md-4">
+                <blockquote class="blockquote">
+                    <p>"ZARA MART is my go-to online store."</p>
+                    <footer class="blockquote-footer">Linda P.</footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="my-5 text-center">
+    <h2>Join Our Newsletter</h2>
+    <p class="text-muted">Be the first to know about our discounts and special offers.</p>
+    <form class="row justify-content-center">
+        <div class="col-md-6">
+            <input type="email" class="form-control mb-2" placeholder="Enter your email">
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Subscribe</button>
+        </div>
+    </form>
+</section>
+{% endblock %}
