@@ -1,19 +1,18 @@
-# Python
-*.pyc
+# Byte-compiled / cache
 __pycache__/
+*.pyc
 *.pyo
 *.pyd
-*.sqlite3
-
-# Virtual environment
-venv/
-env/
-*.env
 
 # Django stuff
 db.sqlite3
 /media/
 staticfiles/
+
+# Virtual environment
+venv/
+env/
+*.env
 
 # VSCode
 .vscode/
